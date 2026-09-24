@@ -10,7 +10,7 @@ from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Literal, Optional
 
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from app.config import get_settings
 
@@ -173,8 +173,9 @@ class TraceStep(BaseModel):
 
 
 class ChatRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")  # unknown fields -> 422
+
     message: str = Field(min_length=1, max_length=get_settings().max_query_chars)
-    thread_id: Optional[str] = None
 
     @field_validator("message", mode="before")
     @classmethod
@@ -188,6 +189,8 @@ class ChatRequest(BaseModel):
 
 
 class ApproveRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     thread_id: str = Field(min_length=1, max_length=100)
     approve: bool
     reviewer_note: Optional[str] = Field(default=None, max_length=500)

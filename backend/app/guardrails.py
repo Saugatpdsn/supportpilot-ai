@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import re
 from typing import Any
+import logging
 
 # Tags we use to fence untrusted data. Stripped from any untrusted text so a
 # document or message cannot "close" the fence and smuggle in instructions.
@@ -99,3 +100,27 @@ def deterministic_answer_issues(
         elif ident not in tool_blob and ident.split("-")[1] not in query:
             issues.append(f"the answer mentions {ident}, which is not in the tool results or message")
     return issues
+
+# --------------------------------------------------------------------------
+# Log redaction: no secrets or personal data in logs
+# --------------------------------------------------------------------------
+_REDACTIONS = [
+    (re.compile(r"AIza[0-9A-Za-z_\-]{20,}"), "[REDACTED_API_KEY]"),
+    (re.compile(r"(?i)(api[_-]?key|token|password|secret)(\s*[=:]\s*)\S+"), r"\1\2[REDACTED]"),
+    (re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+"), "[REDACTED_EMAIL]"),
+]
+
+
+def redact(text: str) -> str:
+    for pattern, replacement in _REDACTIONS:
+        text = pattern.sub(replacement, text)
+    return text
+
+
+class RedactingFilter(logging.Filter):
+    """Masks secrets in every log record that passes through a handler."""
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        record.msg = redact(record.getMessage())
+        record.args = ()
+        return True
