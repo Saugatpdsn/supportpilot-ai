@@ -1,0 +1,89 @@
+{
+  "orders": {
+    "ORD-1001": {
+      "type": "subscription",
+      "plan": "Pro",
+      "billing_cycle": "monthly",
+      "seats": 1,
+      "status": "active",
+      "amount_usd": 12.0,
+      "purchase_date": "2026-03-01",
+      "next_billing_date": "2026-10-01",
+      "charges": [
+        {"date": "2026-09-01", "amount_usd": 12.0, "status": "completed"}
+      ]
+    },
+    "ORD-1002": {
+      "type": "subscription",
+      "plan": "Pro",
+      "billing_cycle": "monthly",
+      "seats": 1,
+      "status": "active",
+      "amount_usd": 12.0,
+      "purchase_date": "2026-05-03",
+      "next_billing_date": "2026-10-03",
+      "charges": [
+        {"date": "2026-09-03", "amount_usd": 12.0, "status": "completed"},
+        {"date": "2026-09-03", "amount_usd": 12.0, "status": "pending_authorization_hold"}
+      ]
+    },
+    "ORD-1003": {
+      "type": "subscription",
+      "plan": "Business",
+      "billing_cycle": "annual",
+      "seats": 5,
+      "status": "active",
+      "amount_usd": 1250.0,
+      "purchase_date": "2026-08-20",
+      "refund_eligible_until": "2026-09-03",
+      "next_billing_date": "2027-08-20",
+      "charges": [
+        {"date": "2026-08-20", "amount_usd": 1250.0, "status": "completed"}
+      ]
+    },
+    "ORD-1004": {
+      "type": "subscription",
+      "plan": "Pro",
+      "billing_cycle": "monthly",
+      "seats": 1,
+      "status": "past_due",
+      "amount_usd": 12.0,
+      "purchase_date": "2026-01-05",
+      "next_retry_date": "2026-09-08",
+      "charges": [
+        {"date": "2026-09-05", "amount_usd": 12.0, "status": "failed"}
+      ]
+    },
+    "ORD-1005": {
+      "type": "subscription",
+      "plan": "Pro",
+      "billing_cycle": "monthly",
+      "seats": 1,
+      "status": "canceled",
+      "amount_usd": 12.0,
+      "purchase_date": "2026-02-14",
+      "canceled_on": "2026-08-14",
+      "access_until": "2026-08-31",
+      "charges": [
+        {"date": "2026-07-14", "amount_usd": 12.0, "status": "completed"}
+      ]
+    },
+    "ORD-1006": {
+      "type": "subscription",
+      "plan": "Pro",
+      "billing_cycle": "annual",
+      "seats": 1,
+      "status": "active",
+      "amount_usd": 120.0,
+      "purchase_date": "2026-09-08",
+      "refund_eligible_until": "2026-09-22",
+      "next_billing_date": "2027-09-08",
+      "charges": [
+        {"date": "2026-09-08", "amount_usd": 120.0, "status": "completed"}
+      ],
+      "refunds": [
+        {"requested_on": "2026-09-10", "amount_usd": 120.0, "status": "processing"}
+      ]
+    }
+  }
+}
