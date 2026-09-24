@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+backend/chroma_db/
+backend/data/tickets.json
+.idea/
+.vscode/
