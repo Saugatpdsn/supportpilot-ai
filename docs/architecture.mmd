@@ -1,0 +1,40 @@
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+	__start__([<p>__start__</p>]):::first
+	understand_query(understand_query)
+	retrieve_knowledge(retrieve_knowledge)
+	decide_action(decide_action)
+	human_review(human_review)
+	prepare_escalation(prepare_escalation)
+	execute_tool(execute_tool)
+	draft_answer(draft_answer)
+	validate_response(validate_response)
+	safe_error(safe_error)
+	__end__([<p>__end__</p>]):::last
+	__start__ --> understand_query;
+	decide_action -. &nbsp;answer&nbsp; .-> draft_answer;
+	decide_action -. &nbsp;tool&nbsp; .-> execute_tool;
+	decide_action -. &nbsp;review&nbsp; .-> human_review;
+	decide_action -. &nbsp;error&nbsp; .-> safe_error;
+	draft_answer -. &nbsp;error&nbsp; .-> safe_error;
+	draft_answer -. &nbsp;ok&nbsp; .-> validate_response;
+	execute_tool --> draft_answer;
+	human_review -. &nbsp;rejected&nbsp; .-> draft_answer;
+	human_review -. &nbsp;approved&nbsp; .-> execute_tool;
+	prepare_escalation --> human_review;
+	retrieve_knowledge -. &nbsp;ok&nbsp; .-> decide_action;
+	retrieve_knowledge -. &nbsp;error&nbsp; .-> safe_error;
+	understand_query -. &nbsp;ok&nbsp; .-> retrieve_knowledge;
+	understand_query -. &nbsp;error&nbsp; .-> safe_error;
+	validate_response -. &nbsp;done&nbsp; .-> __end__;
+	validate_response -. &nbsp;retry&nbsp; .-> draft_answer;
+	validate_response -. &nbsp;escalate&nbsp; .-> prepare_escalation;
+	validate_response -. &nbsp;error&nbsp; .-> safe_error;
+	safe_error --> __end__;
+	classDef default fill:#f2f0ff,line-height:1.2
+	classDef first fill-opacity:0
+	classDef last fill:#bfb6fc

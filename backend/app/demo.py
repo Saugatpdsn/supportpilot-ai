@@ -44,6 +44,7 @@ def show(resp: ChatResponse) -> None:
 
 def main() -> None:
     logging.basicConfig(level=logging.WARNING)
+    logging.getLogger("google_genai.models").setLevel(logging.ERROR)
     parser = argparse.ArgumentParser()
     parser.add_argument("--sample", type=int, choices=SAMPLES.keys(), default=1)
     parser.add_argument("--query", type=str)
